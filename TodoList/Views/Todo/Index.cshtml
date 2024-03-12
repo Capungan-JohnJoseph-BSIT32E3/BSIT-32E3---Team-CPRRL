@@ -1,0 +1,73 @@
+﻿@model List<TodoItem>
+
+<style>
+    th {
+        text-align: center;
+    }
+
+    .action-cell {
+        text-align: center;
+    }
+
+    .btn-lg i {
+        font-size: 1.0em; 
+    }
+
+    .fas.fa-check.text-success {
+        font-size: 2.5em; 
+        color: green; 
+    }
+
+    .fas.fa-times.text-danger {
+        font-size: 2.5em; 
+        color: red;
+    }
+
+    .btn-custom-action {
+        font-size: 1.8em; 
+        margin: 0 auto;
+        display: block;
+ 
+
+    }
+</style>
+
+<h2>Todo List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Task Description</th>
+            <th>Is Completed</th>
+            <th class="action-cell">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TaskDescription</td>
+                <td class="text-center">
+                    @if (item.IsCompleted)
+                    {
+                        <i class="fas fa-check text-success"></i> 
+                    }
+                    else
+                    {
+                        <i class="fas fa-times text-danger"></i> 
+                    }
+                </td>
+                <td class="action-cell">
+         
+                    <form asp-action="MarkAsCompleted" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-link btn-lg btn-custom-action">
+                            <i class="fas @(item.IsCompleted ? "fa-toggle-on text-success" : "fa-toggle-off text-danger")"></i>
+                            <span class="ml-1"></span> 
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
